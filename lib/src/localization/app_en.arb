@@ -1,5 +1,6 @@
 {
-  "appTitle": "flutter_todo_app",
+  "@@locale": "en",
+  "appTitle": "Flutter Todo App",
   "@appTitle": {
     "description": "The title of the application"
   }

@@ -1,0 +1,7 @@
+{
+  "@@locale": "ko",
+  "appTitle": "플러터 할 일 앱",
+  "@appTitle": {
+    "description": "애플리케이션의 제목"
+  }
+}
