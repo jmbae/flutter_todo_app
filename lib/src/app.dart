@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
-import 'todo_list_view.dart';
+import 'todo_list/todo_list_view.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
