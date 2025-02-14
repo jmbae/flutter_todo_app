@@ -18,6 +18,17 @@ class _TodoListViewState extends State<TodoListView> {
   final _textController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _loadTodos();
+  }
+
+  Future<void> _loadTodos() async {
+    await widget.controller.loadTodos();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
