@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_todo_app/src/todo_list/todo_list_controller.dart';
 
-import '../models/todo.dart';
 import '../settings/settings_view.dart';
 
 class TodoListView extends StatefulWidget {
-  const TodoListView({super.key});
+  const TodoListView({super.key, required this.controller});
+  final TodoListController controller;
+
   static const routeName = '/';
 
   @override
@@ -13,11 +15,6 @@ class TodoListView extends StatefulWidget {
 }
 
 class _TodoListViewState extends State<TodoListView> {
-  final List<Todo> _todoList = [
-    Todo(title: 'Buy milk'),
-    Todo(title: 'Buy eggs'),
-    Todo(title: 'Buy bread'),
-  ];
   final _textController = TextEditingController();
 
   @override
@@ -43,18 +40,30 @@ class _TodoListViewState extends State<TodoListView> {
                     decoration: InputDecoration(
                       labelText: 'add todo',
                     ),
-                    onSubmitted: (value) {},
+                    onSubmitted: (value) {
+                      setState(() {
+                        widget.controller.add(value);
+                        _textController.clear();
+                      });
+                    },
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.add))
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        widget.controller.add(_textController.text);
+                        _textController.clear();
+                      });
+                    },
+                    icon: const Icon(Icons.add))
               ],
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: _todoList.length,
+              itemCount: widget.controller.todos.length,
               itemBuilder: (context, index) {
-                final todo = _todoList[index];
+                final todo = widget.controller.todos[index];
                 return ListTile(
                   title: Text(todo.title,
                       style: todo.completed
@@ -65,13 +74,15 @@ class _TodoListViewState extends State<TodoListView> {
                     value: todo.completed,
                     onChanged: (value) {
                       setState(() {
-                        todo.completed = value!;
+                        widget.controller.toggle(todo);
                       });
                     },
                   ),
                   trailing: IconButton(
                       onPressed: () {
-                        // TODO: 삭제 구현
+                        setState(() {
+                          widget.controller.remove(todo);
+                        });
                       },
                       icon: const Icon(Icons.delete)),
                 );
